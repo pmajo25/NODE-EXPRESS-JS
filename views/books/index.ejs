@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Mi Biblioteca</title>
+
+    <!-- Google Fonts: Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap y Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    
+    <style>
+        body {
+            background-image: url('/stylesheets/img/fondo-biblioteca.jpg');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            color: white;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .navbar {
+            background: linear-gradient(to right, #0062E6, #33AEFF);
+        }
+
+        .navbar .nav-link {
+            color: white !important;
+        }
+
+        .navbar .nav-link:hover {
+            color: #ffc107 !important;
+        }
+
+        .navbar-brand {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+                url('https://images.unsplash.com/photo-1512820790803-83ca734da794') center/cover no-repeat;
+            height: 50vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+        }
+
+        .card {
+            background-color: rgba(255, 255, 255, 0.95);
+            color: #333;
+        }
+
+        footer {
+            background: linear-gradient(to right, #0062E6, #33AEFF);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            width: 100%;
+        }
+
+        .footer-link {
+            font-size: 1.4rem;
+            margin: 0 10px;
+            color: white;
+        }
+
+        .footer-link:hover {
+            color: #ffc107;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">📚 Mi Biblioteca</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#libros">Libros</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/books/add">Agregar</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contacto">Contacto</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="container">
+            <h1 class="fw-bold display-5">Descubre tu próxima gran lectura</h1>
+            <p class="lead fs-5">Explora, aprende y comparte desde cualquier lugar</p>
+            <!-- BOTÓN ACTUALIZADO -->
+            <a href="/#" class="btn btn-warning btn-lg mt-3">Explorar libros</a>
+        </div>
+    </section>
+
+    <!-- Libros -->
+    <section class="container py-5" id="libros">
+        <div class="card shadow-lg">
+            <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">📚 Lista de libros</h5>
+                <a href="/books/add" class="btn btn-light btn-sm">
+                    <i class="bi bi-plus-circle me-1"></i> Agregar
+                </a>
+            </div>
+            <div class="card-body">
+                <% if (data.length) { %>
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead class="table-light">
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Nombre</th>
+                                    <th scope="col">Autor</th>
+                                    <th scope="col" class="text-center">Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% for (var i=0; i < data.length; i++) { %>
+                                    <tr>
+                                        <th scope="row">
+                                            <%= (i + 1) %>
+                                        </th>
+                                        <td>
+                                            <%= data[i].name %>
+                                        </td>
+                                        <td>
+                                            <%= data[i].author %>
+                                        </td>
+                                        <td class="text-center">
+                                            <div class="d-flex justify-content-center gap-2">
+                                                <a class="btn btn-outline-success btn-sm"
+                                                    href="/books/edit/<%= data[i].id %>">
+                                                    <i class="bi bi-pencil-fill"></i> Editar
+                                                </a>
+                                                <a class="btn btn-outline-danger btn-sm"
+                                                    href="/books/delete/<%= data[i].id %>"
+                                                    onclick="return confirm('¿Estás segura/o?')">
+                                                    <i class="bi bi-trash-fill"></i> Eliminar
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <% } %>
+                            </tbody>
+                        </table>
+                    </div>
+                <% } else { %>
+                    <p class="text-center text-muted">¡No se encontraron libros!</p>
+                <% } %>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contacto">
+        <h5 class="fw-bold"><i class="bi bi-stars me-2"></i>Explora, Aprende y Comparte</h5>
+        <p>Encuentra tu próximo libro favorito en nuestra biblioteca digital.</p>
+        <div class="d-flex justify-content-center gap-3 mt-3">
+            <a href="#" class="footer-link"><i class="bi bi-facebook"></i></a>
+            <a href="#" class="footer-link"><i class="bi bi-instagram"></i></a>
+            <a href="#" class="footer-link"><i class="bi bi-twitter-x"></i></a>
+            <a href="#" class="footer-link"><i class="bi bi-envelope-fill"></i></a>
+        </div>
+        <small class="d-block mt-3">© 2025 Valentina Zuñiga & Maria Paternina.</small>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
